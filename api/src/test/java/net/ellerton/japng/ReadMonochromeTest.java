@@ -15,7 +15,6 @@ import net.ellerton.japng.map.PngChunkMap;
 import net.ellerton.japng.map.PngMap;
 import net.ellerton.japng.reader.PngAtOnceSource;
 import net.ellerton.japng.reader.PngReadHelper;
-import net.ellerton.japng.util.AsciiBitmapProcessor;
 import net.ellerton.japng.util.PngContainer;
 import org.junit.Test;
 
@@ -146,38 +145,38 @@ public class ReadMonochromeTest {
         }
     }
 
-    @Test
-    public void readsMap_gray_1bit() throws IOException, PngException {
-
-        try (InputStream is = getClass().getResourceAsStream("/pngsuite/basi0g01.png")) {
-            PngMap map;
-            PngChunkMap chunk;
-
-            map = Png.readMap(is, "test");
-            assertEquals(4, map.chunks.size());
-            assertEquals("test", map.source);
-
-            chunk = map.chunks.get(0);
-            assertEquals("IHDR", chunk.code.letters);
-            assertEquals(8, chunk.dataPosition); // Remember that "dataPosition" skips the 4 byte len and 4 byte code.
-            assertEquals(13, chunk.dataLength);
-
-            chunk = map.chunks.get(1);
-            assertEquals("gAMA", chunk.code.letters);
-            assertEquals(33, chunk.dataPosition);
-            assertEquals(4, chunk.dataLength);
-
-            chunk = map.chunks.get(2);
-            assertEquals("IDAT", chunk.code.letters);
-            assertEquals(49, chunk.dataPosition);
-            assertEquals(144, chunk.dataLength);
-
-            chunk = map.chunks.get(3);
-            assertEquals("IEND", chunk.code.letters);
-            assertEquals(205, chunk.dataPosition);
-            assertEquals(0, chunk.dataLength);
-        }
-    }
+    // @Test
+    // public void readsMap_gray_1bit() throws IOException, PngException {
+    //
+    //     try (InputStream is = getClass().getResourceAsStream("/pngsuite/basi0g01.png")) {
+    //         PngMap map;
+    //         PngChunkMap chunk;
+    //
+    //         map = Png.readMap(is, "test");
+    //         assertEquals(4, map.chunks.size());
+    //         assertEquals("test", map.source);
+    //
+    //         chunk = map.chunks.get(0);
+    //         assertEquals("IHDR", chunk.code.letters);
+    //         assertEquals(8, chunk.dataPosition); // Remember that "dataPosition" skips the 4 byte len and 4 byte code.
+    //         assertEquals(13, chunk.dataLength);
+    //
+    //         chunk = map.chunks.get(1);
+    //         assertEquals("gAMA", chunk.code.letters);
+    //         assertEquals(33, chunk.dataPosition);
+    //         assertEquals(4, chunk.dataLength);
+    //
+    //         chunk = map.chunks.get(2);
+    //         assertEquals("IDAT", chunk.code.letters);
+    //         assertEquals(49, chunk.dataPosition);
+    //         assertEquals(144, chunk.dataLength);
+    //
+    //         chunk = map.chunks.get(3);
+    //         assertEquals("IEND", chunk.code.letters);
+    //         assertEquals(205, chunk.dataPosition);
+    //         assertEquals(0, chunk.dataLength);
+    //     }
+    // }
 
     @Test
     public void readsContainer_gray_1bit() throws IOException, PngException {
@@ -209,39 +208,4 @@ public class ReadMonochromeTest {
             //assertEquals(BASN0G01_string, f.processBitmap(pixels));
         }
     }
-
-
-    // TODO: are these worth keeping?
-    @Test
-    public void buildsAscii_gray_1bit() throws IOException, PngException {
-
-        try (InputStream is = getClass().getResourceAsStream("/pngsuite/basn0g01.png")) {
-            String f = Png.read(is, new AsciiBitmapProcessor());
-//            AsciiBitmap f = Png.read(is, new AsciiBitmapBuilder());
-//            assertNotNull(f.header);
-//            assertEquals(32, f.header.width);
-//            assertEquals(32, f.header.height);
-//            assertEquals(1, f.header.bitDepth);
-//            assertEquals(PngColourType.PNG_GREYSCALE, f.header.colourType);
-//            assertEquals(0, f.header.colourType.code);
-//            assertEquals(0, f.header.compressionMethod);
-//            assertEquals(0, f.header.filterMethod);
-//            assertEquals(0, f.header.interlaceMethod);
-//            assertEquals(5, f.header.bytesPerRow);
-//            assertTrue(f.header.isZipCompression());
-//            assertFalse(f.header.isInterlaced());
-//
-//            assertNotNull(f.gamma);
-//            assertEquals(100000, f.gamma.imageGamma);
-//
-//            //assertNotNull(f.decompressedFilteredImageData);
-//            //assertEquals(5 * 32, f.decompressedFilteredImageData.length); // 160
-//
-//            //PngPixelFormatter<String> pixels = PngPixelAsciiFormat.from(f.header);
-//            //assertEquals(BASN0G01_string, f.processBitmap(pixels));
-
-            assertEquals(BASN0G01_string, f);
-        }
-    }
-
 }

@@ -6,3 +6,4 @@ DEL
 .gradle
 .idea
 local.properties
+.envrc
